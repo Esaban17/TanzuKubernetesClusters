@@ -1,0 +1,30 @@
+apiVersion: run.tanzu.vmware.com/v1alpha2
+kind: TanzuKubernetesCluster
+metadata:
+  name: tkg-01
+  namespace: ns-jenkins
+spec:
+  topology:
+    controlPlane:
+      replicas: 1
+      vmClass: best-effort-small
+      storageClass: goldsp
+      tkr:
+        reference:
+          name: v1.23.8---vmware.3-tkg.1.ubuntu
+    nodePools:
+    - name: tkg-quattro-01-nodepool-1
+      replicas: 2
+      vmClass: best-effort-small
+      storageClass: goldsp
+      tkr:
+        reference:
+          name: v1.23.8---vmware.3-tkg.1.ubuntu
+  settings:
+    network:
+      pods:
+        cidrBlocks:
+        - 100.96.0.0/11
+      services:
+        cidrBlocks:
+        - 100.64.0.0/13
